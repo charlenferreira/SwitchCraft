@@ -1,4 +1,4 @@
-name: Build e Release do SwitchCraft
+name: Gerar APK Android
 
 on:
   push:
@@ -33,19 +33,19 @@ jobs:
         with:
           gradle-version: '9.3.1'
 
-      - name: Injetar Versão Dinâmica no Gradle via sed
+      - name: Injetar Versão Dinâmica via sed
         run: |
           VERSION_CODE="${{ github.run_number }}"
           VERSION_NAME="1.0.${{ github.run_number }}"
           echo "Injetando versionCode: $VERSION_CODE e versionName:$VERSION_NAME"
-          sed -i "s/versionCode = [0-9]*/versionCode = $VERSION_CODE/g" app/build.gradle.kts || sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/g" app/build.gradle.kts
-          sed -i "s/versionName = \".*\"/versionName = \"$VERSION_NAME\"/g" app/build.gradle.kts || sed -i "s/versionName \".*\"/versionName \"$VERSION_NAME\"/g" app/build.gradle.kts
+          sed -i "s/versionCode = [0-9]*/versionCode = $VERSION_CODE/g" app/build.gradle.kts \vert{}\vert{} sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/g" app/build.gradle.kts
+          sed -i "s/versionName = \".*\"/versionName = \"$VERSION_NAME\"/g" app/build.gradle.kts \vert{}\vert{} sed -i "s/versionName \".*\"/versionName \"$VERSION_NAME\"/g" app/build.gradle.kts
 
       - name: Garantir debug.keystore Permanente
         run: |
           mkdir -p app/keystore
           if [ ! -f app/keystore/debug.keystore ]; then
-            echo "Gerando debug.keystore permanente..."
+            echo "Criando debug.keystore permanente..."
             keytool -genkey -v -keystore app/keystore/debug.keystore \
               -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
               -storepass android -keypass android \
@@ -54,10 +54,10 @@ jobs:
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add -f app/keystore/debug.keystore
-            git commit -m "ci: persistir debug.keystore permanente [skip ci]" || echo "Sem alterações para commit"
+            git commit -m "ci: persistir debug.keystore permanente [skip ci]" || echo "Sem alterações"
             git push origin HEAD:${{ github.ref_name }} || echo "Push da keystore ignorado"
           else
-            echo "Keystore permanente já encontrada no repositório."
+            echo "debug.keystore já existe."
           fi
 
       - name: Dar Permissão de Execução ao Gradlew
@@ -66,32 +66,30 @@ jobs:
       - name: Compilar APK (Modo Headless)
         run: ./gradlew assembleDebug -Djava.awt.headless=true --stacktrace
 
-      - name: Renomear e Preparar APK Final
+      - name: Preparar Saída Limpa do APK
         run: |
           VERSION_TAG="v1.0.${{ github.run_number }}"
           mkdir -p release-output
-          # Encontra o APK gerado e copia com o nome limpo
-          find app/build/outputs/apk/ -name "*.apk" -exec cp {} release-output/SwitchCraft-$VERSION_TAG.apk \;
-          echo "APK pronto para distribuição:"
+          find app/build/outputs/apk/ -name "*.apk" -exec cp {} release-output/Switch-Craft-$VERSION_TAG.apk \;
+          echo "APK gerado com sucesso:"
           ls -lh release-output/
 
-      - name: Salvar Artefato no GitHub Actions
+      - name: Salvar Artefato
         uses: actions/upload-artifact@v4
         with:
-          name: SwitchCraft-v1.0.${{ github.run_number }}
+          name: Switch-Craft-v1.0.${{ github.run_number }}
           path: release-output/*.apk
 
-      - name: Publicar Release no Repositório
+      - name: Publicar Release no GitHub
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
-          name: "SwitchCraft v1.0.${{ github.run_number }}"
+          name: "Switch-Craft v1.0.${{ github.run_number }}"
           body: |
-            ### 🚀 SwitchCraft Keyboard - Build v1.0.${{ github.run_number }}
+            ### 🚀 Nova versão do Switch-Craft!
+            - **Versão:** `1.0.${{ github.run_number }}`
             - **Commit:** ${{ github.sha }}
-            - **Compilador:** Gradle 9.3.1 & Java 17
-            - **Arquivo:** `SwitchCraft-v1.0.${{ github.run_number }}.apk`
-            - APK assinado e pronto para instalação direta!
+            - Compilado automaticamente via GitHub Actions.
           files: release-output/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
