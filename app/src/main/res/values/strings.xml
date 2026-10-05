@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SwitchCraft</string>
+    <string name="ime_name">SwitchCraft Keyboard</string>
+    <string name="ime_settings">Configurações do SwitchCraft</string>
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:pathData="M30,30 L78,30 A8,8 0 0,1 86,38 L86,72 A8,8 0 0,1 78,80 L30,80 A8,8 0 0,1 22,72 L22,38 A8,8 0 0,1 30,30 Z"
+        android:strokeWidth="2.5">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="22"
+                android:startY="30"
+                android:endX="86"
+                android:endY="80"
+                android:type="linear">
+                <item android:color="#FF00E5FF" android:offset="0.0" />
+                <item android:color="#FF8C00FF" android:offset="0.5" />
+                <item android:color="#FFFF007F" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path
+        android:pathData="M32,32 L76,32 A6,6 0 0,1 82,38 L82,70 A6,6 0 0,1 76,76 L32,76 A6,6 0 0,1 26,70 L26,38 A6,6 0 0,1 32,32 Z"
+        android:fillColor="#26262E" />
+    <path
+        android:pathData="M36,36 L72,36 A4,4 0 0,1 76,40 L76,66 A4,4 0 0,1 72,70 L36,70 A4,4 0 0,1 32,66 L32,40 A4,4 0 0,1 36,36 Z"
+        android:fillColor="#34343F" />
+    <path
+        android:pathData="M51.5,43 L56.5,43 A1.5,1.5 0 0,1 58,44.5 L58,61.5 A1.5,1.5 0 0,1 56.5,63 L51.5,63 A1.5,1.5 0 0,1 50,61.5 L50,44.5 A1.5,1.5 0 0,1 51.5,43 Z"
+        android:fillColor="#FBBF24" />
+    <path
+        android:pathData="M44.5,50.5 L63.5,50.5 A1.5,1.5 0 0,1 65,52 L65,54 A1.5,1.5 0 0,1 63.5,55.5 L44.5,55.5 A1.5,1.5 0 0,1 43,54 L43,52 A1.5,1.5 0 0,1 44.5,50.5 Z"
+        android:fillColor="#F59E0B" />
+    <path
+        android:pathData="M51.5,50.5 L56.5,50.5 L56.5,55.5 L51.5,55.5 Z"
+        android:fillColor="#FDE68A" />
+    <path
+        android:pathData="M35,37 L73,37"
+        android:strokeWidth="1.2"
+        android:strokeColor="#50FFFFFF" />
+</vector>

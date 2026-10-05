@@ -1,0 +1,6 @@
+{
+  "name": "SwitchCraft",
+  "description": "Teclado mecânico virtual e físico profissional com switches customizáveis, perfis 3D e iluminação RGB.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
