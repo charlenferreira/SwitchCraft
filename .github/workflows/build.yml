@@ -38,8 +38,8 @@ jobs:
           VERSION_CODE="${{ github.run_number }}"
           VERSION_NAME="1.0.${{ github.run_number }}"
           echo "Injetando versionCode: $VERSION_CODE e versionName:$VERSION_NAME"
-          sed -i "s/versionCode = [0-9]*/versionCode = $VERSION_CODE/g" app/build.gradle.kts \vert{}\vert{} sed -i "s/versionCode [0-9]*/versionCode $VERSION_CODE/g" app/build.gradle.kts
-          sed -i "s/versionName = \".*\"/versionName = \"$VERSION_NAME\"/g" app/build.gradle.kts \vert{}\vert{} sed -i "s/versionName \".*\"/versionName \"$VERSION_NAME\"/g" app/build.gradle.kts
+          sed -i "s/versionCode = [0-9]*/versionCode = $VERSION_CODE/g" app/build.gradle.kts || true
+          sed -i "s/versionName = \".*\"/versionName = \"$VERSION_NAME\"/g" app/build.gradle.kts || true
 
       - name: Garantir debug.keystore Permanente
         run: |
